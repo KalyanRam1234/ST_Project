@@ -41,62 +41,6 @@ public class useCase6_DAO_JDBC implements useCase6_DAO{
         return s;
     }
 
-
-    // public void enterInfectedDetails(String studentId, String caseId, String name, String date, String testId, String qroomNo, String sdate, String edate, String healthStatus)
-    // {
-    //     PreparedStatement preparedStatement = null;																		
-	// 	String sql;
-	// 	sql = "insert into posCase(caseId, studentId, qroomNo, testId, diagnosisDate) values (?,?,?,?,?)";
-
-	// 	try {
-	// 		preparedStatement = dbConnection.prepareStatement(sql);
- 
-	// 		preparedStatement.setString(1, studentId);
-	// 		preparedStatement.setString(2, caseId);
-    //         preparedStatement.setString(3, date);
-    //         preparedStatement.setString(4, testId);
-    //         preparedStatement.setString(5, qroomNo);
- 
-	// 		// execute insert SQL stetement
-	// 		preparedStatement.executeUpdate();
-	// 	} catch (SQLException e) {
- 	// 		System.out.println(e.getMessage());
- 	// 	}
-
-	// 	try{
-	// 		if (preparedStatement != null) {
-	// 			preparedStatement.close();
-	// 		}
-	// 	} catch (SQLException e) {
- 	// 		System.out.println(e.getMessage());
- 	// 	}
-
-    //      sql = "insert into quarantine(caseId, startDate, endDate, healthStatus) values (?,?,?,?)";
- 
-    //      try {
-    //          preparedStatement = dbConnection.prepareStatement(sql);
-  
-    //          preparedStatement.setString(1, caseId);
-    //          preparedStatement.setString(2, sdate);
-    //          preparedStatement.setString(3, edate);
-    //          preparedStatement.setString(4, healthStatus);
-  
-    //          // execute insert SQL stetement
-    //          preparedStatement.executeUpdate();
-    //          System.out.println("Data entered successfully.\n");
-    //      } catch (SQLException e) {
-    //           System.out.println(e.getMessage());
-    //       }
- 
-    //      try{
-    //          if (preparedStatement != null) {
-    //              preparedStatement.close();
-    //          }
-    //      } catch (SQLException e) {
-    //           System.out.println(e.getMessage());
-    //       }
-    // }
-
     @Override
     public void updateInfectedDetails(String caseid, String qroomNo, String sdate, String edate, String healthStatus) {
                 PreparedStatement preparedStatement = null;																																																																																																																																													
@@ -170,11 +114,6 @@ public class useCase6_DAO_JDBC implements useCase6_DAO{
                         {
                             preparedStatement.setString(l.get(j).getInt(),l.get(j).getString());
                         }
-                        //preparedStatement.setString(1,caseid);
-                        //preparedStatement.setString(2, sdate);
-                        //preparedStatement.setString(3, edate);
-                        //preparedStatement.setString(4, healthStatus);
-                        //preparedStatement.setString(5, caseid);
                         // execute update SQL stetement
                         preparedStatement.executeUpdate();
                     } catch (SQLException e) {
