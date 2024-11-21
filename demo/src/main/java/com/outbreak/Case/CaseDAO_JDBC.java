@@ -62,18 +62,18 @@ public class CaseDAO_JDBC implements CaseDAO{
         PreparedStatement preparedStatement = null;																																																																																																																																													
 		String sql;
         
-        if(!caseId.equals(null))
-		sql = "delete from posCase where caseId=?";
-        else if(!studentId.equals(null))
-        sql = "delete from posCase where studentId=?";
+        if(caseId != null)
+			sql = "delete from posCase where caseId=?";
+        else if(studentId != null)
+        	sql = "delete from posCase where studentId=?";
         else return;
 
 		try {
 			preparedStatement = dbConnection.prepareStatement(sql);
 		
-            if(!caseId.equals(null))
+            if(caseId != null)
                 preparedStatement.setString(1, caseId);
-            else if(!studentId.equals(null))
+            else if(studentId != null)
                 preparedStatement.setString(1, studentId);
 			
 			// execute update SQL stetement

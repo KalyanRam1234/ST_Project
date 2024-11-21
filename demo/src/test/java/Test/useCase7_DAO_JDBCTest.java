@@ -5,8 +5,11 @@ import com.outbreak.UseCases.useCase7.useCase7a;
 import com.outbreak.UseCases.useCase7.useCase7b;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class useCase7_DAO_JDBCTest {
     private useCase7_DAO_JDBC dao;
@@ -90,5 +94,74 @@ public class useCase7_DAO_JDBCTest {
         useCase7b result = dao.getInfob1(mockResultSet, student);
         assertEquals("Negative", result.getRTPCRResult());
         assertEquals("2023-10-01", result.getRTPCRDate());
+    }
+
+    @Test
+    public void testSQLExceptionHandlingDetailed() throws SQLException {
+        // Mocking Connection and Statement objects
+        Connection mockConnection = Mockito.mock(Connection.class);
+        ResultSet mockResultSet = Mockito.mock(ResultSet.class);
+
+        // Simulating SQLException for statement and result set operations
+        SQLException testException = new SQLException("Test SQL Exception", "TestState", 999);
+        Mockito.when(mockConnection.createStatement()).thenThrow(testException);
+        Mockito.when(mockResultSet.getString(Mockito.anyString())).thenThrow(testException);
+
+        // Instantiate DAO with mocked connection
+        useCase7_DAO_JDBC dao = new useCase7_DAO_JDBC(mockConnection);
+
+        // Capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // Expected output strings
+        String expectedMessage = "SQLException: Test SQL Exception";
+        String expectedState = "SQLState: TestState";
+        String expectedErrorCode = "VendorError: 999";
+
+        // Test getInfectedStudentsList
+        dao.getInfectedStudentsList();
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        // Clear output for the next test
+        outContent.reset();
+
+        // Test getRooomatesOfInfectedStudents
+        ArrayList<useCase7a> dummyInfectedList = new ArrayList<>();
+        dummyInfectedList.add(new useCase7a("1", "Dummy", "case1", "H101", "Q101", "null"));
+        dao.getRooomatesOfInfectedStudents(dummyInfectedList);
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        // Clear output for the next test
+        outContent.reset();
+
+        // Test getInfoa
+        dao.getInfoa(mockResultSet);
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+        // Test getInfob
+        dao.getInfob(mockResultSet);
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+        // Test getInfob1
+        dao.getInfob1(mockResultSet, new useCase7b());
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        // Reset the system output
+        System.setOut(System.out);
     }
 }
