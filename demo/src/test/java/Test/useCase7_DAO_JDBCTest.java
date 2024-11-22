@@ -5,7 +5,7 @@ import com.outbreak.UseCases.useCase7.useCase7a;
 import com.outbreak.UseCases.useCase7.useCase7b;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayOutputStream;
@@ -129,7 +129,7 @@ public class useCase7_DAO_JDBCTest {
         outContent.reset();
 
         // Test getRooomatesOfInfectedStudents
-        ArrayList<useCase7a> dummyInfectedList = new ArrayList<>();
+        ArrayList<useCase7a> dummyInfectedList = new ArrayList<useCase7a>();
         dummyInfectedList.add(new useCase7a("1", "Dummy", "case1", "H101", "Q101", "null"));
         dao.getRooomatesOfInfectedStudents(dummyInfectedList);
         assertTrue(outContent.toString().contains(expectedMessage));

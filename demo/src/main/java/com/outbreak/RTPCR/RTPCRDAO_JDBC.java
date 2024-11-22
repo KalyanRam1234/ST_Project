@@ -12,6 +12,10 @@ public class RTPCRDAO_JDBC implements RTPCRDAO{
         dao=new CaseDAO_JDBC(dbConnection);
     }
 
+    public void setCaseDao(CaseDAO dao){
+        this.dao=dao;
+    }
+
     @Override
     public ArrayList<RTPCR> getRTPCRByStudentId(String id){
         
