@@ -217,33 +217,6 @@ public class AdminUI
             System.out.println("|Total number of rows printed: \t\t\t\t\t\t|" + String.format("%5d",tr) + "\t\t\t\t\t\t|");
             System.out.println("\n|Total number of postive results: \t\t\t\t\t|" + String.format("%5d",pos_count) + "\t\t\t\t\t\t|");
         
-        // int c=0; 
-        // while(c<rlist.size()){
-    
-        //     if(c==0)System.out.print("\n|List of rows that have positive in Test result column: \t\t| [ ");
-        //     else    System.out.print("\n                                                        \t\t|   ");
-
-        //     int i=0;
-        //     for(i=0; i<rlist.size() && i<13; i++)
-        //     {    
-        //         System.out.print(rlist.get(i) + ", ");
-        //         c++;
-        //     }
-        //     if(c==rlist.size()){
-        //         System.out.print(" ]");
-        //         //System.out.println(String.format("%30s","|"));
-        //         System.out.print("\t|\n");
-        //     }
-        //     else{ 
-        //         System.out.print("  ");
-        //         //System.out.println(String.format("%20s","|"));
-        //         String s= "";
-        //         for(int j=0; j<(i/4+1); j++)
-        //             s+="\t";
-        //         System.out.print(s+"|\n");
-        //     }
-        // }
-        
         System.out.println("*************************************************************************************************************************\n\n");
     }
 
@@ -279,34 +252,7 @@ public class AdminUI
         System.out.println("\n\n*************************************************************************************************************************");
         System.out.println("|Total number of rows printed: \t\t\t\t\t\t|" + String.format("%5d",tr) + "\t\t\t\t\t\t|");
         System.out.println("\n|Total number of postive results: \t\t\t\t\t|" + String.format("%5d",pos_count) + "\t\t\t\t\t\t|");
-        
-        // int c=0;
-        // while(c<rlist.size()){
-    
-        //     if(c==0)System.out.print("\n|List of rows that have positive in Test result column: \t\t| [ ");
-        //     else    System.out.print("\n                                                        \t\t|   ");
-            
-        //     int i=0;
-        //     for(i=0; i<rlist.size() && i<13; i++)
-        //     {    
-        //         System.out.print(rlist.get(i) + ", ");
-        //         c++;
-        //     }
-        //     if(c==rlist.size()){
-        //         System.out.print(" ]");
-        //         //System.out.println(String.format("%30s","|"));
-        //         System.out.print("\t|\n");
-        //     }
-        //     else{ 
-        //         System.out.print("  ");
-        //         //System.out.println(String.format("%20s","|"));
-        //         String s= "";
-        //         for(int j=0; j<(i/4+1); j++)
-        //             s+="\t";
-        //         System.out.print(s+"|\n");
-        //     }
-        // }
-        
+
         System.out.println("*************************************************************************************************************************\n\n");
     }
 
@@ -338,33 +284,7 @@ public class AdminUI
         } catch(IndexOutOfBoundsException e){
             System.out.println("There is no data for that date. Please check the date you entered.\n");
         }
-        // int c=0; 
-        // while(c<rlist.size()){
-    
-        //     if(c==0)System.out.print("\n|List of rows that have positive in Test result column: \t\t| [ ");
-        //     else    System.out.print("\n                                                        \t\t|   ");
-            
-        //     int i=0;
-        //     for(i=0; i<rlist.size() && i<13; i++)
-        //     {    
-        //         System.out.print(rlist.get(i) + ", ");
-        //         c++;
-        //     }
-        //     if(c==rlist.size()){
-        //         System.out.print(" ]");
-        //         //System.out.println(String.format("%30s","|"));
-        //         System.out.print("\t|\n");
-        //     }
-        //     else{ 
-        //         System.out.print("  ");
-        //         //System.out.println(String.format("%20s","|"));
-        //         String s= "";
-        //         for(int j=0; j<(i/4+1); j++)
-        //             s+="\t";
-        //         System.out.print(s+"|\n");
-        //     }
-        // }
-        
+  
         System.out.println("*************************************************************************************************************************\n\n");
     }
 
@@ -620,36 +540,6 @@ public class AdminUI
             if(s.equals("-1") || s.equals("1") || s.equals("2")) { i=Integer.parseInt(s); return i;} 
         }
     }
-
-    // public ArrayList<String> displayUpdateInfected_Prompt1()
-    // {
-    //     Scanner sc = new Scanner(System.in);
-    //     ArrayList<String> list = new ArrayList<String>();
-
-    //     System.out.println("******************************************** OUTBREAK OBSERVER ********************************************************");
-    //     System.out.println("                         \033[3m Track the spread, Fight covid-19, Protect your community.\033[0m\n"); 
-            
-    //     System.out.println("Hello Admin! Welcome to home screen of Outbreak Observer.\n Enter the infected details details (keep in mind that the caseId must be unique, sid must exist) :\n\n");
-    //     //need to change this
-    //     System.out.println("caseId: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("studentId: ");
-    //     list.add( sc.nextLine() );  
-    //     System.out.println("qroomNo: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("testId: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("diagnosisDate: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("startDate: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("endDate: ");
-    //     list.add( sc.nextLine() );
-    //     System.out.println("healthStatus: ");
-    //     list.add( sc.nextLine() );
-
-    //     return list;
-    // }
 
     public ArrayList<String> displayUpdateInfected_Prompt2()
     {

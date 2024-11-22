@@ -47,6 +47,10 @@ public class useCase6_DAO_JDBCTest {
         assertNotNull(result);
         assertEquals("S123", result.getstudentId());
         assertEquals("John Doe", result.getName());
+        assertEquals("2023-10-01",result.getDate());
+        assertEquals("T456", result.getTestId());
+        assertEquals("Q101", result.getqRoomNo());
+        assertEquals("Infected", result.getHealthStatus());
         verify(mockResultSet, times(1)).getString("studentId");
     }
 

@@ -49,7 +49,7 @@ public class useCase7_DAO_JDBCTest {
 
     @Test
     public void testGetRooomatesOfInfectedStudents() throws SQLException {
-        ArrayList<useCase7a> infectedStudents = new ArrayList<>();
+        ArrayList<useCase7a> infectedStudents = new ArrayList<useCase7a>();
         infectedStudents.add(new useCase7a("1", "John Doe", "C1", "101", "201", "Healthy"));
 
         when(mockConnection.createStatement()).thenReturn(mockStatement);
