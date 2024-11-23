@@ -188,9 +188,9 @@ public class HostelDAO_JDBC implements HostelDAO {
  		}
 
 		try{
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
+			// if (preparedStatement != null) {
+			preparedStatement.close();
+			// }
 		} catch (SQLException e) {
  			System.out.println(e.getMessage());
  		}

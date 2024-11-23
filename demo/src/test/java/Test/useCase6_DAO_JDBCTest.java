@@ -2,6 +2,7 @@ package Test;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.outbreak.UseCases.useCase6.useCase6;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
@@ -257,5 +259,98 @@ public class useCase6_DAO_JDBCTest {
         verify(mockPreparedStatement, atLeastOnce()).close();
     }
 
- 
+    @Test
+    public void testUpdateInfectedDetails_OnlyStartDate() throws SQLException {
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+
+        useCase6_DAO_JDBC newDao= new useCase6_DAO_JDBC(mockConnection);
+        // Call the method
+        newDao.updateInfectedDetails("case123", "null", "2023-11-20", "null", "null");
+
+        // Verify correct query construction
+        ArgumentCaptor<String> sqlCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockConnection).prepareStatement(sqlCaptor.capture());
+        String capturedSQL = sqlCaptor.getValue();
+
+        assertTrue(capturedSQL.contains("startDate=?"));
+        assertFalse(capturedSQL.contains("endDate=?"));
+        assertFalse(capturedSQL.contains("healthStatus=?"));
+
+        // Verify values passed
+        verify(mockPreparedStatement, atLeastOnce()).setString(1, "case123");
+        verify(mockPreparedStatement, atLeastOnce()).setString(2, "2023-11-20");
+        verify(mockPreparedStatement, atLeastOnce()).setString(3, "case123");
+    }
+
+
+    @Test
+    public void testUpdateInfectedDetails_OnlyEndDate() throws SQLException {
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+
+        useCase6_DAO_JDBC newDao = new useCase6_DAO_JDBC(mockConnection);
+
+        // Call the method
+        newDao.updateInfectedDetails("case123", "null", "null", "2023-11-25", "null");
+
+        // Verify correct query construction
+        ArgumentCaptor<String> sqlCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockConnection).prepareStatement(sqlCaptor.capture());
+        String capturedSQL = sqlCaptor.getValue();
+
+        assertTrue(capturedSQL.contains("endDate=?"));
+        assertFalse(capturedSQL.contains("startDate=?"));
+        assertFalse(capturedSQL.contains("healthStatus=?"));
+
+        // Verify values passed
+        verify(mockPreparedStatement, atLeastOnce()).setString(1, "case123");
+        verify(mockPreparedStatement, atLeastOnce()).setString(2, "2023-11-25");
+        verify(mockPreparedStatement, atLeastOnce()).setString(3, "case123");
+    }
+
+    @Test
+    public void testUpdateInfectedDetails_OnlyHealthStatus() throws SQLException {
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+
+        useCase6_DAO_JDBC newDao = new useCase6_DAO_JDBC(mockConnection);
+
+        // Call the method
+        newDao.updateInfectedDetails("case123", "null", "null", "null", "Recovered");
+
+        // Verify correct query construction
+        ArgumentCaptor<String> sqlCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockConnection).prepareStatement(sqlCaptor.capture());
+        String capturedSQL = sqlCaptor.getValue();
+
+        assertTrue(capturedSQL.contains("healthStatus=?"));
+        assertFalse(capturedSQL.contains("startDate=?"));
+        assertFalse(capturedSQL.contains("endDate=?"));
+
+        // Verify values passed
+        verify(mockPreparedStatement, atLeastOnce()).setString(1, "case123");
+        verify(mockPreparedStatement, atLeastOnce()).setString(2, "Recovered");
+        verify(mockPreparedStatement, atLeastOnce()).setString(3, "case123");
+    }
+
+
+    @Test
+    public void testUpdateInfectedDetails_AllNull() throws SQLException {
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+    
+        useCase6_DAO_JDBC newDao= new useCase6_DAO_JDBC(mockConnection);
+    
+        // Call the method
+        newDao.updateInfectedDetails("case123", "null", "null", "null", "null");
+    
+        // Verify no updates are made
+        verify(mockPreparedStatement, never()).executeUpdate();
+    }
+    
 }

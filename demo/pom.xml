@@ -57,7 +57,15 @@
                 <version>1.17.1</version>
                 <configuration>
                     <targetClasses>
-                        <param>com.outbreak.*</param> 
+                        <param>com.outbreak.Case.*</param> 
+                        <param>com.outbreak.HostelRoom.*</param> 
+                        <param>com.outbreak.Login.*</param> 
+                        <param>com.outbreak.RTPCR.*</param>
+                        <param>com.outbreak.UseCases.useCase6.*</param>  
+                        <param>com.outbreak.UseCases.useCase7.*</param>  
+
+                        <!-- <param>com.outbreak.*</param>   -->
+
                     </targetClasses>
                     <targetTests>
                         <param>Test.*</param> 

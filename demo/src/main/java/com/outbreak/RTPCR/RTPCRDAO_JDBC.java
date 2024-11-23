@@ -255,9 +255,7 @@ public class RTPCRDAO_JDBC implements RTPCRDAO{
  		}
 
 		try{
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
+			preparedStatement.close();
 		} catch (SQLException e) {
  			System.out.println(e.getMessage());
  		}
@@ -269,18 +267,21 @@ public class RTPCRDAO_JDBC implements RTPCRDAO{
         PreparedStatement preparedStatement = null;																																																																																																																																													
 		String sql;
         
-        if(!testId.equals(null))
-		sql = "delete from rtpcr where testId=?";
-        else if(!studentId.equals(null))
-        sql = "delete from rtpcr where studentId=?";
-        else return;
+        if (testId != null) {
+            sql = "delete from rtpcr where testId=?";
+        } else if (studentId != null) {
+            sql = "delete from rtpcr where studentId=?";
+        } else {
+            return;
+        }
+        
 
 		try {
 			preparedStatement = dbConnection.prepareStatement(sql);
 		
-            if(!testId.equals(null))
+            if(testId!=null)
                 preparedStatement.setString(1, testId);
-            else if(!studentId.equals(null))
+            else if(studentId!=null)
                 preparedStatement.setString(1, studentId);
 			
 			// execute update SQL stetement
@@ -290,9 +291,8 @@ public class RTPCRDAO_JDBC implements RTPCRDAO{
  		}
 
 		try{
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
+			preparedStatement.close();
+			
 		} catch (SQLException e) {
  			System.out.println(e.getMessage());
  		}
