@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -255,4 +256,6 @@ public class useCase6_DAO_JDBCTest {
         // Verify that the prepared statement is closed
         verify(mockPreparedStatement, atLeastOnce()).close();
     }
+
+ 
 }

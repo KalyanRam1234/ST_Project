@@ -121,9 +121,9 @@ public class useCase6_DAO_JDBC implements useCase6_DAO{
                      }
                  
                     try{
-                        if (preparedStatement != null) {
-                            preparedStatement.close();
-                        }
+                        
+                        preparedStatement.close();
+                        
                     } catch (SQLException e) {
                       System.out.println(e.getMessage());
                   }

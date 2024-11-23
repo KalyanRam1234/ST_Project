@@ -6,11 +6,16 @@ import org.mockito.Mockito;
 
 import com.outbreak.HostelRoom.HostelDAO_JDBC;
 import com.outbreak.HostelRoom.HostelRoom;
+import com.outbreak.UseCases.useCase7.useCase7a;
+import com.outbreak.UseCases.useCase7.useCase7b;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.sql.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class HostelDAO_JDBCTest {
@@ -147,4 +152,169 @@ public class HostelDAO_JDBCTest {
         verify(mockPreparedStatement).setString(1, "R103");
         verify(mockPreparedStatement).executeUpdate();
     }
+
+    @Test
+    public void testSQLExceptionHandlingRoom() throws SQLException {
+
+         // Simulating SQLException for statement and result set operations
+        SQLException testException = new SQLException("Test SQL Exception", "TestState", 999);
+        Mockito.when(mockConnection.createStatement()).thenThrow(testException);
+        // Mockito.when(mockResultSet.getString(Mockito.anyString())).thenThrow(testException);
+
+         // Capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // Expected output strings
+        String expectedMessage = "SQLException: Test SQL Exception";
+        String expectedState = "SQLState: TestState";
+        String expectedErrorCode = "VendorError: 999";
+
+        hostelDAO.getRoomDetails("R103");
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+    }
+
+    @Test
+    public void testSQLExceptionHandlingVacancy() throws SQLException {
+
+         // Simulating SQLException for statement and result set operations
+        SQLException testException = new SQLException("Test SQL Exception", "TestState", 999);
+        Mockito.when(mockConnection.createStatement()).thenThrow(testException);
+        // Mockito.when(mockResultSet.getString(Mockito.anyString())).thenThrow(testException);
+
+         // Capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // Expected output strings
+        String expectedMessage = "SQLException: Test SQL Exception";
+        String expectedState = "SQLState: TestState";
+        String expectedErrorCode = "VendorError: 999";
+
+        hostelDAO.getHostelVacancy("Hostel");
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+    }
+
+    @Test
+    public void testSQLExceptionHandlingCapacity() throws SQLException {
+
+         // Simulating SQLException for statement and result set operations
+        SQLException testException = new SQLException("Test SQL Exception", "TestState", 999);
+        Mockito.when(mockConnection.createStatement()).thenThrow(testException);
+        // Mockito.when(mockResultSet.getString(Mockito.anyString())).thenThrow(testException);
+
+         // Capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // Expected output strings
+        String expectedMessage = "SQLException: Test SQL Exception";
+        String expectedState = "SQLState: TestState";
+        String expectedErrorCode = "VendorError: 999";
+
+        hostelDAO.getHostelCapacity("Hostel");
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+    }
+
+    @Test
+    public void testSQLExceptionHandlingAllRooms() throws SQLException {
+
+         // Simulating SQLException for statement and result set operations
+        SQLException testException = new SQLException("Test SQL Exception", "TestState", 999);
+        Mockito.when(mockConnection.createStatement()).thenThrow(testException);
+        // Mockito.when(mockResultSet.getString(Mockito.anyString())).thenThrow(testException);
+
+         // Capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        // Expected output strings
+        String expectedMessage = "SQLException: Test SQL Exception";
+        String expectedState = "SQLState: TestState";
+        String expectedErrorCode = "VendorError: 999";
+
+        hostelDAO.getallRooms();
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+
+        outContent.reset();
+
+        hostelDAO.getEmptyHRooms();
+
+        assertTrue(outContent.toString().contains(expectedMessage));
+        assertTrue(outContent.toString().contains(expectedState));
+        assertTrue(outContent.toString().contains(expectedErrorCode));
+    }
+
+    @Test
+    public void testGetEmptyHRooms() throws SQLException {
+        // Mock the database connection and related objects
+        Connection mockConnection = mock(Connection.class);
+        Statement mockStatement = mock(Statement.class);
+        ResultSet mockResultSet = mock(ResultSet.class);
+
+        // Define behavior for the mocked objects
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery("select * from hostelRoom where roomType=\"Quarantine\" AND vacancy>0")).thenReturn(mockResultSet);
+
+        // Simulate rows in the result set
+        when(mockResultSet.next()).thenReturn(true, true, false); // 2 rows, then no more rows
+        when(mockResultSet.getString("roomNo")).thenReturn("R101", "R102");
+        when(mockResultSet.getString("roomType")).thenReturn("Quarantine", "Quarantine");
+        when(mockResultSet.getString("capacity")).thenReturn("4", "6");
+        when(mockResultSet.getString("vacancy")).thenReturn("2", "1");
+        when(mockResultSet.getString("hostelType")).thenReturn("TypeA", "TypeB");
+
+        // Call the method under test
+        HostelDAO_JDBC newHostelDAO= new HostelDAO_JDBC(mockConnection);
+        ArrayList<HostelRoom> result = newHostelDAO.getEmptyHRooms();
+
+        // Assertions to verify the correctness of the method
+        assertNotNull(result);
+        assertEquals(2, result.size()); // Expecting 2 rooms in the list
+
+        // Verify the first room
+        HostelRoom room1 = result.get(0);
+        assertEquals("R101", room1.getroomNo());
+        assertEquals("Quarantine", room1.getroomType());
+        assertEquals(4, room1.getCapacity());
+        assertEquals(2, room1.getVacancy());
+        assertEquals("TypeA", room1.gethostelType());
+
+        // Verify the second room
+        HostelRoom room2 = result.get(1);
+        assertEquals("R102", room2.getroomNo());
+        assertEquals("Quarantine", room2.getroomType());
+        assertEquals(6, room2.getCapacity());
+        assertEquals(1, room2.getVacancy());
+        assertEquals("TypeB", room2.gethostelType());
+
+        // Verify interactions with the mocks
+        verify(mockConnection, times(1)).createStatement();
+        verify(mockStatement, times(1)).executeQuery("select * from hostelRoom where roomType=\"Quarantine\" AND vacancy>0");
+        verify(mockResultSet, times(3)).next(); // Called 3 times (2 rows + 1 for false)
+        verify(mockResultSet, atLeastOnce()).getString("roomNo");
+        verify(mockResultSet, atLeastOnce()).getString("roomType");
+        verify(mockResultSet, atLeastOnce()).getString("capacity");
+        verify(mockResultSet, atLeastOnce()).getString("vacancy");
+        verify(mockResultSet, atLeastOnce()).getString("hostelType");
+
+    }
+
 }
